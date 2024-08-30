@@ -1,5 +1,5 @@
-require "x86-syntax.k"
-require "x86-memory.k"
+requires "x86-syntax.k"
+requires "x86-memory.k"
 module  X86-ABSTRACT-SORTS
   syntax PointerVal
   syntax NullVal

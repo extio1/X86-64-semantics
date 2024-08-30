@@ -1,4 +1,4 @@
-require "x86-float-conversions.k"
+requires "x86-float-conversions.k"
 
 module MINT-WRAPPER-SORT
   syntax MIntMap

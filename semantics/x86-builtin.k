@@ -1,5 +1,5 @@
-require "x86-configuration.k"
-require "x86-mint-wrapper.k"
+requires "x86-configuration.k"
+requires "x86-mint-wrapper.k"
 
 module X86-BUILTIN-SYNTAX
   //imports X86-ABSTRACT-SORTS

@@ -1,6 +1,6 @@
-require "x86-configuration.k"
-require "x86-mint-wrapper.k"
-require "x86-abstract-syntax.k"
+requires "x86-configuration.k"
+requires "x86-mint-wrapper.k"
+requires "x86-abstract-syntax.k"
 
 module X86-MEMORY-SORT
   syntax MemLoadValue

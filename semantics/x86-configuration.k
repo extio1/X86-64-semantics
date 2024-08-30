@@ -1,9 +1,9 @@
-require "x86-syntax.k"
-require "x86-abstract-syntax.k"
-require "common/common-memory.k"
-require "x86-memory.k"
-require "x86-env-init.k"
-require "x86-mint-wrapper.k"
+requires "x86-syntax.k"
+requires "x86-abstract-syntax.k"
+requires "common/common-memory.k"
+requires "x86-memory.k"
+requires "x86-env-init.k"
+requires "x86-mint-wrapper.k"
 
 module X86-CONFIGURATION
   imports X86-SYNTAX

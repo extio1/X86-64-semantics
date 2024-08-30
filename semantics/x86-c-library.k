@@ -1,4 +1,4 @@
-require "x86-configuration.k"
+requires "x86-configuration.k"
 module X86-C-LIBRARY-SYNTAX
   imports COMMON-C-LIBRARY-OPAQUE-SORTS
   imports X86-ABSTRACT-SORTS

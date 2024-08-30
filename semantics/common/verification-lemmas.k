@@ -1,5 +1,5 @@
 module INTEGER-LEMMAS
-  import DOMAINS
+  imports DOMAINS
   rule 0 +Int I:Int => I
   rule I:Int +Int 0 => I
   rule 0 *Int _:Int => 0
@@ -20,7 +20,7 @@ module INTEGER-LEMMAS
 endmodule
 
 module BOOLEAN-LEMMAS
-  import DOMAINS
+  imports DOMAINS
   rule true orBool _ => true
   rule _ orBool true => true
   rule false andBool _ => false

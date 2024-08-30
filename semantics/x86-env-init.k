@@ -1,4 +1,4 @@
-require "x86-configuration.k"
+requires "x86-configuration.k"
 
 module X86-INIT-SYNTAX
   imports LIST
