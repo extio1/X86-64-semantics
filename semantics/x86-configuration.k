@@ -1,19 +1,22 @@
 requires "x86-syntax.k"
-requires "x86-abstract-syntax.k"
-requires "common/common-memory.k"
-requires "x86-memory.k"
-requires "x86-env-init.k"
-requires "x86-mint-wrapper.k"
+// requires "x86-abstract-syntax.k"
+// requires "common/common-memory.k"
+// requires "x86-memory.k"
+// requires "x86-env-init.k"
+// requires "x86-mint-wrapper.k"
 
 module X86-CONFIGURATION
   imports X86-SYNTAX
-  imports X86-ABSTRACT-SYNTAX
-  imports COMMON-MEMORY-CONFIGURATION
-  imports X86-MEMORY-SYNTAX
-  imports X86-INIT-SYNTAX
-  imports MINT-WRAPPER-SYNTAX
-  imports X86-LOADER-SYNTAX
-  imports COMMON-C-LIBRARY-CONFIGURATION
+  imports MINT
+  imports STRING
+  imports MAP
+  // imports X86-ABSTRACT-SYNTAX
+  // imports COMMON-MEMORY-CONFIGURATION
+  // imports X86-MEMORY-SYNTAX
+  // imports X86-INIT-SYNTAX
+  // imports MINT-WRAPPER-SYNTAX
+  // imports X86-LOADER-SYNTAX
+  // imports COMMON-C-LIBRARY-CONFIGURATION
 
 
   // configuration <T>
@@ -22,40 +25,39 @@ module X86-CONFIGURATION
     <k> 
 	//initRegisters($REGV:RegValPairList) ~> 
 	//initEnvironment($ARGV:List) ~> 
-	initEnvironment(.List) ~> 
-	$PGM:Instructions ~> 
-        loadEntryPoint ~>
-	inforegisters ~> 
-	fetch 
+	// initEnvironment(.List) ~> 
+	$PGM:Instructions
+        // loadEntryPoint ~>
+	// inforegisters ~> 
+	// fetch 
     </k>
 
-    <functargets> .Map </functargets> 
-    <rotargets> .Map </rotargets> 
-    <datatargets> .Map </datatargets> 
-    <bsstargets> .Map </bsstargets> 
-    <entrypoint> .K </entrypoint>
-    <nextLocPc> mi(64, 0) </nextLocPc>
-    <lastseenlabel> .K </lastseenlabel>
-    <currentsection> "text" </currentsection>
+    // <functargets> .Map </functargets> 
+    // <rotargets> .Map </rotargets> 
+    // <datatargets> .Map </datatargets> 
+    // <bsstargets> .Map </bsstargets> 
+    // <entrypoint> .K </entrypoint>
+    // <nextLocPc> mi(64, 0) </nextLocPc>
+    // <lastseenlabel> .K </lastseenlabel>
+    // <currentsection> "text" </currentsection>
 
-    <memstate>
-      <text> code( .Map ) </text>
-      <stack>
-        <memory/>
-        <stackbase> stackBaseInfo(.K, .K) </stackbase>
-        <robase> roBaseInfo(.K /* Alocation id*/, .K /*Base Pointer*/, .K /*Next Location*/ ) </robase>
-        <database> dataBaseInfo(.K , .K , .K ) </database>
-        <bssbase>   bssBaseInfo(.K , .K , .K ) </bssbase>
-      </stack>
-    </memstate>
+    // <memstate>
+    //   <text> code( .Map ) </text>
+    //   <stack>
+    //     <memory/>
+    //     <stackbase> stackBaseInfo(.K, .K) </stackbase>
+    //     <robase> roBaseInfo(.K /* Alocation id*/, .K /*Base Pointer*/, .K /*Next Location*/ ) </robase>
+    //     <database> dataBaseInfo(.K , .K , .K ) </database>
+    //     <bssbase>   bssBaseInfo(.K , .K , .K ) </bssbase>
+    //   </stack>
+    // </memstate>
 
-    <environment>
-      <argc> .K </argc>
-      <argv> .K </argv>
-    </environment>
+    // <environment>
+    //   <argc> .K </argc>
+    //   <argv> .K </argv>
+    // </environment>
 
     <regstate>
-      //.Map
     ("RIP"    |-> mi(64, 0)) 
     ("RAX"    |-> mi(64, 0)) 
     ("RBX"    |-> mi(64, 0)) 
@@ -111,6 +113,6 @@ module X86-CONFIGURATION
 
     <formatcountint> 0 </formatcountint>
     <formatcountfloat> 0 </formatcountfloat>
-    <c-library/>
-    <formatting/>
+    // <c-library/>
+    // <formatting/>
 endmodule
