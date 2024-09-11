@@ -4,90 +4,90 @@ module X86-SORT
   syntax Label
   syntax HexConstant
   syntax Operands
-  syntax MemOffset
+  // syntax MemOffset
   syntax Operand
-  syntax Operand
+  // syntax Operand
   syntax Register
-  syntax Offset
+  // syntax Offset
   syntax Imm
-  syntax Mem
+  // syntax Mem
   syntax Rip
-  syntax Scale
+  // syntax Scale
   syntax Rh
   syntax R8
   syntax R16
   syntax R32
   syntax R64
-  //syntax Sreg
+  // //syntax Sreg
   syntax Xmm
   syntax Mm
   syntax Ymm
   syntax Opcode
-  syntax Builtin
+  // syntax Builtin
 endmodule
 
 module X86-SYNTAX
   imports X86-SORT
   imports INT
-  imports FLOAT
+  // imports FLOAT
   imports STRING
-  imports MINT
+  // imports MINT
   imports ID
-  imports MINT
+  imports LIST
 
-  /*@ 
-    The following captures  the At&t syntax of x86 assembly.
-  */
-  syntax Instructions ::= List{Instruction, ""} [klabel(instructionlist)]
+  // /*@ 
+  //   The following captures  the At&t syntax of x86 assembly.
+  // */
+  syntax Instructions ::= List{Instruction, ""} [symbol(instructionlist)]
   syntax Instruction ::=  Opcode Operands
                        | AssemblerDirective
                        | Label
 
-  syntax Builtin ::= "putchar" [token]                     
-                   | "getchar"  [token]
-                   | "printf"  [token]
-                   | "fprintf"  [token]
-                   | "sprintf"  [token]
-                   | "snprintf"  [token]
-                   | "scanf"  [token]
-                   | "fscanf"  [token]
-                   | "__isoc99_fscanf" [token]
-                   | "sscanf"  [token]
-                   | "_IO_putc"  [token]
-                   | "fputc"  [token]
-                   | "fopen"  [token]
-                   | "freopen"  [token]
-                   | "fclose"  [token]
-                   | "fflush"  [token]
-                   | "fwrite"  [token]
-                   | "fread"  [token]
-                   | "fputs"  [token]
-                   | "puts"  [token]
-                   | "feof"  [token]
-                   | "fgetc"  [token]
-                   | "getc"  [token]
-                   | "fgets"  [token]
-                   | "gets"  [token]
-                   | "fseek"  [token]
-                   | "rewind"  [token]
-                   | "malloc"  [token]
-                   | "free"  [token]
-                   | "sqrt"  [token]
+  // syntax Builtin ::= "putchar" [token]                     
+  //                  | "getchar"  [token]
+  //                  | "printf"  [token]
+  //                  | "fprintf"  [token]
+  //                  | "sprintf"  [token]
+  //                  | "snprintf"  [token]
+  //                  | "scanf"  [token]
+  //                  | "fscanf"  [token]
+  //                  | "__isoc99_fscanf" [token]
+  //                  | "sscanf"  [token]
+  //                  | "_IO_putc"  [token]
+  //                  | "fputc"  [token]
+  //                  | "fopen"  [token]
+  //                  | "freopen"  [token]
+  //                  | "fclose"  [token]
+  //                  | "fflush"  [token]
+  //                  | "fwrite"  [token]
+  //                  | "fread"  [token]
+  //                  | "fputs"  [token]
+  //                  | "puts"  [token]
+  //                  | "feof"  [token]
+  //                  | "fgetc"  [token]
+  //                  | "getc"  [token]
+  //                  | "fgets"  [token]
+  //                  | "gets"  [token]
+  //                  | "fseek"  [token]
+  //                  | "rewind"  [token]
+  //                  | "malloc"  [token]
+  //                  | "free"  [token]
+  //                  | "sqrt"  [token]
 
   syntax X86Id ::= Id
-  /*@
-    Special symbols.
-  */  
-  syntax X86Id ::= "main" [token]
-                | "_start" [token] 
-                | "stdout" [token] 
+  // /*@
+  //   Special symbols.
+  // */  
+  syntax X86Id ::= "main"
+                | "_start"
+                | "stdout"
 
-  syntax AssemblerDirective ::=  ".section" ".rodata"
+  syntax AssemblerDirective ::=  ".section" ".rodata" 
                             | ".data"
                             | ".text" 
-                            | ".bss" 
+                            | ".bss"
                             | ".file" String 
-                            | ".globl" X86Id 
+                            | ".globl" X86Id
                             | ".string" String 
                             | ".ascii" String 
                             | ".long" Int 
@@ -101,40 +101,41 @@ module X86-SYNTAX
 
   syntax Label ::= X86Id ":"
         
-  syntax HexConstant ::=  r"$0x[0-9a-fA-F]+" [token]
+  syntax HexConstant ::=  r"\\$0x[0-9a-fA-F]+" [token]
 
-  syntax Operands ::= List{Operand, ","} [klabel(operandlist)]
+  syntax Operands ::= List{Operand, ","} [symbol(operandlist)]
 
+  // ONLY IMMEDIATE AND REGISTER VALUES ARE ALLOWED TO BE OPERANDs
   syntax Operand ::=    Imm
-                       | Mem
+                      //  | Mem
                        | Register
-                       | MemOffset
-                       | X86Id
-                       | Builtin
-                       | "$" X86Id
-                       | "$" X86Id "+" Int
+                      //  | MemOffset
+                      //  | X86Id
+                      //  | Builtin
+                      //  | "$" X86Id
+                      //  | "$" X86Id "+" Int
                        /*@
                         * Adding Int and Float as operands helps in
                         * testing float-conversion directly.
                         */ 
-                       | Int
-                       | Float
+                      //  | Int
+                      //  | Float
                        /*@
                         *  execinstr(Opcode (R:Operand .Operands):Operands) 
                         *  are sometimes writen as 
                         *  execinstr(Opcode getRegisterValue(R) .Operands)
                         *  which requires MInt to be a subSort of Operand.  
                         */
-                       | MInt
+                      //  | MInt
 //                     | Mm
 //                     | St
 //                     | Memoffs
 //                     | Sreg
 
-  syntax MemOffset ::= memOffset ( MInt )
+  // syntax MemOffset ::= memOffset ( MInt )
 
-//syntax Simpleoperand ::= Register | Imm | MemOffset
-//syntax Operand ::= Simpleoperand
+// //syntax Simpleoperand ::= Register | Imm | MemOffset
+// //syntax Operand ::= Simpleoperand
 
   syntax Register ::= Rh
                     | R8
@@ -144,69 +145,69 @@ module X86-SYNTAX
                     | Xmm
                     | Ymm
                     | Mm
-//  syntax Memoffs ::= Offset
-//                   | Sreg ":" Offset
-  syntax Offset ::= Int
+// //  syntax Memoffs ::= Offset
+// //                   | Sreg ":" Offset
+//   syntax Offset ::= Int
   syntax Imm ::= "$" Int
                | HexConstant
 
-  /*@
-   * `Mem` can be evaluated to a KResult `MemOffset`
-   * Hence making MemOffset a subsort of Mem. 
-   */
-  syntax Mem ::= MemOffset             
-  syntax Mem ::=  "(" Rip ")"
-               | X86Id "(" Rip ")"
-               | X86Id "+" Int "(" Rip ")"
-               //------------------------------------
-               | "(" R64 ")"
-               | Offset "(" R64 ")"
-               | X86Id "(" R64 ")"
-               | X86Id "+" Int "(" R64 ")"
-               //------------------------------------
-               | "(" "," R64 "," Scale ")"
-               | "(" "," R64 ")"
-               | Offset "(" "," R64 "," Scale ")"
-               | Offset "(" "," R64 ")"
-               | X86Id "(" "," R64 "," Scale ")"
-               | X86Id "(" "," R64 ")"
-               | X86Id "+" Int "(" "," R64 "," Scale ")"
-               | X86Id "+" Int "(" "," R64 ")"
-               //------------------------------------
-               | "(" R64 "," R64 "," Scale ")"
-               | "(" R64 "," R64 ")"
-               | Offset "(" R64 "," R64 "," Scale ")"
-               | Offset "(" R64 "," R64 ")"
-               | X86Id "(" R64 "," R64 "," Scale ")"
-               | X86Id "(" R64 "," R64 ")"
-               | X86Id "+" Int "(" R64 "," R64 "," Scale ")"
-               | X86Id "+" Int "(" R64 "," R64 ")"
+//   /*@
+//    * `Mem` can be evaluated to a KResult `MemOffset`
+//    * Hence making MemOffset a subsort of Mem. 
+//    */
+//   syntax Mem ::= MemOffset             
+//   syntax Mem ::=  "(" Rip ")"
+//                | X86Id "(" Rip ")"
+//                | X86Id "+" Int "(" Rip ")"
+//                //------------------------------------
+//                | "(" R64 ")"
+//                | Offset "(" R64 ")"
+//                | X86Id "(" R64 ")"
+//                | X86Id "+" Int "(" R64 ")"
+//                //------------------------------------
+//                | "(" "," R64 "," Scale ")"
+//                | "(" "," R64 ")"
+//                | Offset "(" "," R64 "," Scale ")"
+//                | Offset "(" "," R64 ")"
+//                | X86Id "(" "," R64 "," Scale ")"
+//                | X86Id "(" "," R64 ")"
+//                | X86Id "+" Int "(" "," R64 "," Scale ")"
+//                | X86Id "+" Int "(" "," R64 ")"
+//                //------------------------------------
+//                | "(" R64 "," R64 "," Scale ")"
+//                | "(" R64 "," R64 ")"
+//                | Offset "(" R64 "," R64 "," Scale ")"
+//                | Offset "(" R64 "," R64 ")"
+//                | X86Id "(" R64 "," R64 "," Scale ")"
+//                | X86Id "(" R64 "," R64 ")"
+//                | X86Id "+" Int "(" R64 "," R64 "," Scale ")"
+//                | X86Id "+" Int "(" R64 "," R64 ")"
 
-//              | Sreg ":" "(" R32 ")"
-//              | Sreg ":" "(" R64 ")"
-//              | Sreg ":" "(" Rip ")"
-//               | Sreg ":" Offset "(" R32 ")"
-//               | Sreg ":" Offset "(" R64 ")"
-//               | Sreg ":" Offset "(" Rip ")"
-//               | Sreg ":" "(" "," R32 "," Scale ")"
-//               | Sreg ":" "(" "," R64 "," Scale ")"
-//               | Sreg ":" "(" "," R32 ")"
-//               | Sreg ":" "(" "," R64 ")"
-//               | Sreg ":" Offset "(" "," R32 "," Scale ")"
-//               | Sreg ":" Offset "(" "," R64 "," Scale ")"
-//               | Sreg ":" Offset "(" "," R32 ")"
-//               | Sreg ":" Offset "(" "," R64 ")"
-//               | Sreg ":" "(" R32 "," R32 "," Scale ")"
-//               | Sreg ":" "(" R64 "," R64 "," Scale ")"
-//               | Sreg ":" "(" R32 "," R32 ")"
-//               | Sreg ":" "(" R64 "," R64 ")"
-//               | Sreg ":" Offset "(" R32 "," R32 "," Scale ")"
-//               | Sreg ":" Offset "(" R64 "," R64 "," Scale ")"
-//               | Sreg ":" Offset "(" R32 "," R32 ")"
-//               | Sreg ":" Offset "(" R64 "," R64 ")"
+// //              | Sreg ":" "(" R32 ")"
+// //              | Sreg ":" "(" R64 ")"
+// //              | Sreg ":" "(" Rip ")"
+// //               | Sreg ":" Offset "(" R32 ")"
+// //               | Sreg ":" Offset "(" R64 ")"
+// //               | Sreg ":" Offset "(" Rip ")"
+// //               | Sreg ":" "(" "," R32 "," Scale ")"
+// //               | Sreg ":" "(" "," R64 "," Scale ")"
+// //               | Sreg ":" "(" "," R32 ")"
+// //               | Sreg ":" "(" "," R64 ")"
+// //               | Sreg ":" Offset "(" "," R32 "," Scale ")"
+// //               | Sreg ":" Offset "(" "," R64 "," Scale ")"
+// //               | Sreg ":" Offset "(" "," R32 ")"
+// //               | Sreg ":" Offset "(" "," R64 ")"
+// //               | Sreg ":" "(" R32 "," R32 "," Scale ")"
+// //               | Sreg ":" "(" R64 "," R64 "," Scale ")"
+// //               | Sreg ":" "(" R32 "," R32 ")"
+// //               | Sreg ":" "(" R64 "," R64 ")"
+// //               | Sreg ":" Offset "(" R32 "," R32 "," Scale ")"
+// //               | Sreg ":" Offset "(" R64 "," R64 "," Scale ")"
+// //               | Sreg ":" Offset "(" R32 "," R32 ")"
+// //               | Sreg ":" Offset "(" R64 "," R64 ")"
 
   syntax Rip ::= "%rip"
-  syntax Scale ::= Int
+  // syntax Scale ::= Int
 
   syntax Rh ::= "%ah"
               | "%bh"
@@ -277,22 +278,22 @@ module X86-SYNTAX
                | "%r14"
                | "%r15"
 
-  syntax Sreg ::= "%es"
-                | "%cs"
-                | "%ss"
-                | "%ds"
-                | "%fs"
-                | "%gs"
+//   syntax Sreg ::= "%es"
+//                 | "%cs"
+//                 | "%ss"
+//                 | "%ds"
+//                 | "%fs"
+//                 | "%gs"
 
-  syntax St ::= "%st"
-              | "%st(0)"
-              | "%st(1)"
-              | "%st(2)"
-              | "%st(3)"
-              | "%st(4)"
-              | "%st(5)"
-              | "%st(6)"
-              | "%st(7)"
+//   syntax St ::= "%st"
+//               | "%st(0)"
+//               | "%st(1)"
+//               | "%st(2)"
+//               | "%st(3)"
+//               | "%st(4)"
+//               | "%st(5)"
+//               | "%st(6)"
+//               | "%st(7)"
 
   syntax Xmm ::= "%xmm0"
                | "%xmm1"
@@ -311,7 +312,7 @@ module X86-SYNTAX
                | "%xmm14"
                | "%xmm15"
 
-  syntax Mm ::= "%mmx0"
+  syntax Mm ::=  "%mmx0"
                | "%mmx1"
                | "%mmx2"
                | "%mmx3"

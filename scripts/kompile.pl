@@ -19,11 +19,11 @@ use kutils;
 use File::Find;
 
 # Using GetOPtions
-my $script_path = dirname( abs_path($0) );
-my $baseDir     = "$script_path/../semantics";
-my $UTInstructionsPath = "$baseDir/underTestInstructions/";
-my $help               = "";
-my $backend            = "ocaml";
+my $script_path         = dirname( abs_path($0) );
+my $baseDir             = "$script_path/../semantics";
+my $UTInstructionsPath  = "$baseDir/underTestInstructions/";
+my $help                = "";
+my $backend             = "ocaml";
 my $sfp;
 my $removeComment;
 
@@ -45,8 +45,10 @@ execute("mkdir -p $UTInstructionsPath");
 createSingleFileDefn();
 execute("git status x86-instructions-semantics.k");
 execute(
+    # "time  kompile x86-semantics.k --syntax-module X86-SYNTAX --main-module \\
+    # X86-SEMANTICS --debug -v --backend $backend -I ./ -I common/x86-config/", 1
     "time  kompile x86-semantics.k --syntax-module X86-SYNTAX --main-module \\
-    X86-SEMANTICS --debug -v --backend $backend -I ./ -I common/x86-config/", 1
+    X86-SEMANTICS --debug -v --backend $backend -I ./ --enable-llvm-debug", 1
 );
 
 $CWD = $current;

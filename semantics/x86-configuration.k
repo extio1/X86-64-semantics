@@ -1,101 +1,109 @@
 requires "x86-syntax.k"
 requires "x86-abstract-syntax.k"
-requires "common/common-memory.k"
-requires "x86-memory.k"
-requires "x86-env-init.k"
-requires "x86-mint-wrapper.k"
+// requires "common/common-memory.k"
+// requires "x86-memory.k"
+// requires "x86-env-init.k"
+// requires "x86-mint-wrapper.k"
 
 module X86-CONFIGURATION
   imports X86-SYNTAX
+  imports MINT
+  imports STRING
+  imports MAP
   imports X86-ABSTRACT-SYNTAX
-  imports COMMON-MEMORY-CONFIGURATION
-  imports X86-MEMORY-SYNTAX
-  imports X86-INIT-SYNTAX
-  imports MINT-WRAPPER-SYNTAX
-  imports X86-LOADER-SYNTAX
-  imports COMMON-C-LIBRARY-CONFIGURATION
+  imports LIST
+  // imports COMMON-MEMORY-CONFIGURATION
+  // imports X86-MEMORY-SYNTAX
+  // imports X86-INIT-SYNTAX
+  // imports MINT-WRAPPER-SYNTAX
+  // imports X86-LOADER-SYNTAX
+  // imports COMMON-C-LIBRARY-CONFIGURATION
 
-
+  syntax MInt{64}
+  syntax MInt{1}
+  syntax MInt{256}
   // configuration <T>
   configuration
 //initEnvironment(ListItem("a.out") ListItem("HelloWorld!") .List) ~> 
     <k> 
 	//initRegisters($REGV:RegValPairList) ~> 
 	//initEnvironment($ARGV:List) ~> 
-	initEnvironment(.List) ~> 
-	$PGM:Instructions ~> 
-        loadEntryPoint ~>
-	inforegisters ~> 
-	fetch 
+	// initEnvironment(.List) ~> 
+	    $PGM:Instructions
+        // loadEntryPoint ~>
+      // inforegisters ~> 
+      // fetch 
     </k>
 
-    <functargets> .Map </functargets> 
-    <rotargets> .Map </rotargets> 
-    <datatargets> .Map </datatargets> 
-    <bsstargets> .Map </bsstargets> 
-    <entrypoint> .K </entrypoint>
-    <nextLocPc> mi(64, 0) </nextLocPc>
-    <lastseenlabel> .K </lastseenlabel>
+    // <functargets> .Map </functargets> 
+    // <rotargets> .Map </rotargets> 
+    // <datatargets> .Map </datatargets> 
+    // <bsstargets> .Map </bsstargets> 
+    // <entrypoint> .K </entrypoint>
+    <nextLocPc> 0p64 </nextLocPc>
+    // <lastseenlabel> .K </lastseenlabel>
     <currentsection> "text" </currentsection>
+
+    <debug1> .K </debug1>
+    <debug2> .K </debug2>
 
     <memstate>
       <text> code( .Map ) </text>
-      <stack>
-        <memory/>
-        <stackbase> stackBaseInfo(.K, .K) </stackbase>
-        <robase> roBaseInfo(.K /* Alocation id*/, .K /*Base Pointer*/, .K /*Next Location*/ ) </robase>
-        <database> dataBaseInfo(.K , .K , .K ) </database>
-        <bssbase>   bssBaseInfo(.K , .K , .K ) </bssbase>
-      </stack>
+    //   <stack>
+    //     <memory/>
+    //     <stackbase> stackBaseInfo(.K, .K) </stackbase>
+    //     <robase> roBaseInfo(.K /* Alocation id*/, .K /*Base Pointer*/, .K /*Next Location*/ ) </robase>
+    //     <database> dataBaseInfo(.K , .K , .K ) </database>
+    //     <bssbase>   bssBaseInfo(.K , .K , .K ) </bssbase>
+    //   </stack>
     </memstate>
 
-    <environment>
-      <argc> .K </argc>
-      <argv> .K </argv>
-    </environment>
+    // <environment>
+    //   <argc> .K </argc>
+    //   <argv> .K </argv>
+    // </environment>
 
     <regstate>
-      //.Map
-    ("RIP"    |-> mi(64, 0)) 
-    ("RAX"    |-> mi(64, 0)) 
-    ("RBX"    |-> mi(64, 0)) 
-    ("RCX"    |-> mi(64, 0)) 
-    ("RDX"    |-> mi(64, 0)) 
-    ("RSI"    |-> mi(64, 0)) 
-    ("RDI"    |-> mi(64, 0)) 
-    ("RSP"    |-> mi(64, 0)) 
-    ("RBP"    |-> mi(64, 0)) 
-    ("R8"     |-> mi(64, 0)) 
-    ("R9"     |-> mi(64, 0)) 
-    ("R10"    |-> mi(64, 0)) 
-    ("R11"    |-> mi(64, 0)) 
-    ("R12"    |-> mi(64, 0)) 
-    ("R13"    |-> mi(64, 0)) 
-    ("R14"    |-> mi(64, 0)) 
-    ("R15"    |-> mi(64, 0)) 
-    ("CF"     |-> mi(1, 0)) 
-    ("DF"     |-> mi(1, 0)) 
-    ("PF"     |-> mi(1, 0)) 
-    ("AF"     |-> mi(1, 0)) 
-    ("ZF"     |-> mi(1, 0)) 
-    ("SF"     |-> mi(1, 0)) 
-    ("OF"     |-> mi(1, 0)) 
-    ("YMM0"   |->  mi(256, 0)) 
-    ("YMM1"   |->  mi(256, 0)) 
-    ("YMM2"   |->  mi(256, 0)) 
-    ("YMM3"   |->  mi(256, 0)) 
-    ("YMM4"   |->  mi(256, 0)) 
-    ("YMM5"   |->  mi(256, 0)) 
-    ("YMM6"   |->  mi(256, 0)) 
-    ("YMM7"   |->  mi(256, 0)) 
-    ("YMM8"   |->  mi(256, 0)) 
-    ("YMM9"   |->  mi(256, 0)) 
-    ("YMM10"  |->  mi(256, 0)) 
-    ("YMM11"  |->  mi(256, 0)) 
-    ("YMM12"  |->  mi(256, 0)) 
-    ("YMM13"  |->  mi(256, 0)) 
-    ("YMM14"  |->  mi(256, 0)) 
-    ("YMM15"  |->  mi(256, 0))
+      ("RIP"    |-> 0p64) 
+      ("RAX"    |-> 42p64) 
+      ("RBX"    |-> 404p64) 
+      ("RCX"    |-> 0p64) 
+      ("RDX"    |-> 0p64) 
+      ("RSI"    |-> 0p64) 
+      ("RDI"    |-> 0p64) 
+      ("RSP"    |-> 0p64) 
+      ("RBP"    |-> 0p64) 
+      ("R8"     |-> 0p64) 
+      ("R9"     |-> 0p64) 
+      ("R10"    |-> 0p64) 
+      ("R11"    |-> 0p64) 
+      ("R12"    |-> 0p64) 
+      ("R13"    |-> 0p64) 
+      ("R14"    |-> 0p64) 
+      ("R15"    |-> 0p64) 
+      ("CF"     |-> 0p1) 
+      ("DF"     |-> 0p1) 
+      ("PF"     |-> 0p1) 
+      ("AF"     |-> 0p1) 
+      ("ZF"     |-> 0p1) 
+      ("SF"     |-> 0p1) 
+      ("OF"     |-> 0p1) 
+      ("YMM0"   |-> 0p256) 
+      ("YMM1"   |-> 0p256) 
+      ("YMM2"   |-> 0p256) 
+      ("YMM3"   |-> 0p256) 
+      ("YMM4"   |-> 0p256) 
+      ("YMM5"   |-> 0p256) 
+      ("YMM6"   |-> 0p256) 
+      ("YMM7"   |-> 0p256) 
+      ("YMM8"   |-> 0p256) 
+      ("YMM9"   |-> 0p256) 
+      ("YMM10"  |-> 0p256) 
+      ("YMM11"  |-> 0p256) 
+      ("YMM12"  |-> 0p256) 
+      ("YMM13"  |-> 0p256) 
+      ("YMM14"  |-> 0p256) 
+      ("YMM15"  |-> 0p256)
     </regstate>
 
     /*@
@@ -109,8 +117,8 @@ module X86-CONFIGURATION
     // <itracer> .List </itracer>
     <regstatequeue> .List </regstatequeue>
 
-    <formatcountint> 0 </formatcountint>
-    <formatcountfloat> 0 </formatcountfloat>
-    <c-library/>
-    <formatting/>
+    <formatcountint> 0:Int </formatcountint>
+    <formatcountfloat> 0:Int </formatcountfloat>
+    // <c-library/>
+    // <formatting/>
 endmodule
