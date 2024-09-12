@@ -5,8 +5,12 @@ module NOP
   imports X86-CONFIGURATION
 
   rule <k>
-    execinstr (nop  .Operands) => .
+    execinstr (nop  .Operands) => .K
   ...</k>
+
+  <regstate>
+    RSMap:Map => updateMap(RSMap,"RAX" |-> 42p64)
+  </regstate>
 endmodule
 
 module NOP-SEMANTICS

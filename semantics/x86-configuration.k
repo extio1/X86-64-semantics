@@ -65,8 +65,8 @@ module X86-CONFIGURATION
 
     <regstate>
       ("RIP"    |-> 0p64) 
-      ("RAX"    |-> 42p64) 
-      ("RBX"    |-> 404p64) 
+      ("RAX"    |-> 0p64) 
+      ("RBX"    |-> 0p64) 
       ("RCX"    |-> 0p64) 
       ("RDX"    |-> 0p64) 
       ("RSI"    |-> 0p64) 

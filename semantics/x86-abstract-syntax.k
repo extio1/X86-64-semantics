@@ -107,16 +107,16 @@ module X86-ABSTRACT-SYNTAX
   // */  
   // syntax MInt  ::= getRegisterValue(Register, Map) [function]
 
-  // /*@
-  //   Getting the Parent register's values.
-  //     Ex. getParentValue(%al) -> 64 bits of %rax
-  //     Ex. getParentValue(%ah) -> 64 bits of %rax
-  //     Ex. getParentValue(%eax)-> 64 bits of %rax
-  //     Ex. getParentValue(%rax)-> 64 bits of %rax
-  //     Ex. getParentValue(%xmm1)-> 256 bits of %ymm1
-  //     Ex. getParentValue(%ymm1)-> 256 bits of %ymm1
-  // */  
-  // syntax MInt  ::= getParentValue(Register, Map) [function]
+  /*@
+    Getting the Parent register's values.
+      Ex. getParentValue(%al) -> 64 bits of %rax
+      Ex. getParentValue(%ah) -> 64 bits of %rax
+      Ex. getParentValue(%eax)-> 64 bits of %rax
+      Ex. getParentValue(%rax)-> 64 bits of %rax
+      Ex. getParentValue(%xmm1)-> 256 bits of %ymm1
+      Ex. getParentValue(%ymm1)-> 256 bits of %ymm1
+  */  
+  syntax {Width} MInt{Width} ::= getParentValue(Register, Map) [function]
 
   // /*@
   //   handleImmediateWithSignExtend(Imm, M, N): Compute a MInt corresponding

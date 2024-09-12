@@ -13,8 +13,8 @@ BEGIN{
 	unshift @INC, "$home/binary-decompilation/x86-semantics/scripts/";
 }
 
-use kutils;
-use utils;
+# use kutils;
+# use utils;
 
 my $help       = "";
 my $file       = "";
