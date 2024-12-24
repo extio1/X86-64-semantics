@@ -82,12 +82,15 @@ sub mergeToSingleFile {
     }
 
     my $koutput = "$file";
+    my $module_name = "";
 
     open( my $fp, "<", $koutput ) or die "Can't open ::$koutput\:: $!";
     my @lines = <$fp>;
 
     for my $line (@lines) {
         if ( $line =~ m/^module (.*)/ ) {
+            $module_name = substr($line, 7);
+            chomp $module_name;
             print $sfp "// " . lc($1) . "\n";
             next;
         }
@@ -102,6 +105,9 @@ sub mergeToSingleFile {
         }
         if ( $line =~ m/endmodule/ ) {
             print $sfp "\n";
+            unless ($module_name =~ m/-SEMANTICS$/) {
+                print $sfp "[klabel(".$module_name.")]\n";
+            }
             if ( $removeComment == 1 ) {
                 last;
             }
